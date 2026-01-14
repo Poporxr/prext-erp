@@ -86,7 +86,7 @@ model Teacher {
   name      String
   email     String     @unique
   phone     String
-  hireDate  DateTime
+  hireDate  DateTime?
   status    UserStatus @default(ACTIVE)
   createdAt DateTime   @default(now())
 

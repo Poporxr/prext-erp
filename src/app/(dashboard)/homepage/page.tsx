@@ -1,8 +1,65 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Role } from "@/src/utils/role";
 
-const homepage = () => {
-  
+const menuItems = [
+  {
+    href: "/classes/1324",
+    label: "Students",
+    icon: "/students.svg",
+    roles: [Role.TEACHER, Role.ADMIN],
+  },
+  {
+    href: "/results",
+    label: "Results",
+    icon: "/result.svg",
+    roles: [Role.STUDENT],
+  },
+  {
+    href: "/inbox",
+    label: "Inbox",
+    icon: "/inbox.svg",
+  },
+  {
+    href: "/teachers",
+    label: "Teachers",
+    icon: "/teachers.svg",
+    roles: [Role.ADMIN],
+  },
+  {
+    href: "/timetable",
+    label: "Timetable",
+    icon: "/timetable.svg",
+  },
+  {
+    href: "/classes",
+    label: "Classes",
+    icon: "/class.svg",
+    roles: [Role.TEACHER, Role.ADMIN],
+  },
+  {
+    href: "/faqs",
+    label: "FAQs",
+    icon: "/faqs.svg",
+  },
+  {
+    href: "/logout",
+    label: "Logout",
+    icon: "/logout.svg",
+  },
+];
+
+
+
+
+
+const Homepage = () => {
+  const userRole: Role = Role.ADMIN; // get from auth/session
+
+  const visibleItems = menuItems.filter(
+    (item) => !item.roles || item.roles.includes(userRole)
+  );
+
   return (
     <main className="min-h-screen bg-[#345FB4] font-serif">
       {/* Header */}
@@ -10,7 +67,7 @@ const homepage = () => {
         <div>
           <h2 className="text-lg font-semibold">Hi, Emmanuel</h2>
           <div className="flex gap-2 text-sm opacity-90 mt-1">
-            <span>Student</span>
+            <span>{userRole}</span>
             <span>•</span>
             <span>Class 3B</span>
           </div>
@@ -25,26 +82,18 @@ const homepage = () => {
       </header>
 
       {/* Content */}
-      <section className="bg-white rounded-t-4xl px-4 pt-8 pb-10 lg:h-screen h-screen">
+      <section className="bg-white rounded-t-4xl px-4 pt-8 pb-10 h-screen">
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-          {[
-            {href:"/classes/1324", label: "Students", icon: "/students.svg" },
-            {href:"/results", label: "Results", icon: "/result.svg" },
-            {href:"/inbox", label: "Inbox", icon: "/inbox.svg" },
-            {href:"/teachers",  label: "Teachers", icon: "/teachers.svg" },
-            {href:"/timetable",  label: "Timetable", icon: "/timetable.svg" },
-            {href:"/classes",  label: "Classes", icon: "/class.svg" },
-            {href:"faqs/",  label: "FAQs", icon: "/faqs.svg" },
-            { href:"/logout", label: "Logout", icon: "/logout.svg" },
-          ].map((item) => (
-            <Link href={item.href}
+          {visibleItems.map((item) => (
+            <Link
               key={item.label}
+              href={item.href}
               className="bg-[#F6F7F9] rounded-2xl p-4 flex flex-col items-start gap-3 shadow-sm hover:shadow-md transition"
             >
               <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center">
                 <Image src={item.icon} width={22} height={22} alt={item.label} />
               </div>
-              <p className="text-sm font-medium text-gray-800">
+              <p className="text-md font-medium text-gray-800">
                 {item.label}
               </p>
             </Link>
@@ -55,4 +104,4 @@ const homepage = () => {
   );
 };
 
-export default homepage;
+export default Homepage;
