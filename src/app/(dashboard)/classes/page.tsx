@@ -42,7 +42,7 @@ const ClassesPage = () => {
 
 
       {/* Content */}
-      <section className="bg-white rounded-t-4xl px-4 pt-6 pb-10">
+      <section className="bg-white rounded-t-4xl px-4 pt-10 pb-60 ">
         <div className="flex flex-col gap-8">
           {classes.map((group) => (
             <div key={group.title}>

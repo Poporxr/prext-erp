@@ -65,13 +65,13 @@ const Homepage = () => {
       {/* Header */}
       <header className="px-4 pt-6 pb-10 text-white flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold">Hi, Emmanuel</h2>
-          <div className="flex gap-2 text-sm opacity-90 mt-1">
+          <h2 className="text-xl font-semibold">Hi, Emmanuel</h2>
+          <div className="flex gap-2 text-lg opacity-90 mt-1">
             <span>{userRole}</span>
             <span>•</span>
             <span>Class 3B</span>
           </div>
-          <span className="inline-block mt-2 px-3 py-1 bg-white/90 text-[#345FB4] text-xs rounded-full font-medium">
+          <span className="inline-block mt-2 px-3 py-1 bg-white/90 text-[#345FB4] text-sm rounded-full font-medium">
             2024 / 2025
           </span>
         </div>

@@ -59,7 +59,7 @@ export default function SingleStudentPage({
       </header>
 
       {/* CONTENT */}
-      <section className="bg-white rounded-t-[40px] px-4 pt-8 pb-20 min-h-screen">
+      <section className="bg-white rounded-t-[40px] px-4 pt-8 pb-50 min-h-screen">
         {/* STUDENT INFO */}
         <div className="grid grid-cols-2 gap-4 text-sm mb-8">
           <InfoCard label="Age" value={`${student.age} yrs`} />

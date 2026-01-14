@@ -48,7 +48,7 @@ export default function SingleClassPage({
 
 
       {/* Content */}
-      <section className="bg-white rounded-t-4xl px-4 pt-6 pb-12">
+      <section className="bg-white rounded-t-4xl px-4 pt-6 pb-55 ">
         <div className="bg-[#F6F7F9] rounded-2xl p-4 mb-6 flex items-center justify-between shadow-sm">
           <div>
             <p className="text-sm text-gray-500">Class Teacher</p>

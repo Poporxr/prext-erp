@@ -14,7 +14,7 @@ const StudentsPage = () => {
       </header>
 
       {/* Content */}
-      <section className="bg-white rounded-t-4xl px-4 pt-6 pb-10 h-screen">
+      <section className="bg-white rounded-t-4xl px-4 pt-6 pb-50 min-h-screen">
         <div className="flex flex-col gap-3">
           {[
             { name: "Alice Brown", roll: "01" },

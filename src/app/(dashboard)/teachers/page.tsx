@@ -20,7 +20,7 @@ const TeachersPage = () => {
 
 
       {/* Content */}
-      <section className="bg-white rounded-t-4xl px-4 pt-6 pb-10">
+      <section className="bg-white rounded-t-4xl px-4 pt-6 pb-50">
         <div className="mb-4">
         <input 
         className="bg-[#f3f3f3] w-full p-2 border rounded-2xl border-[#a0a0a0]"

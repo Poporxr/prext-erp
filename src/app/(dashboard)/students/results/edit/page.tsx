@@ -38,7 +38,7 @@ export default function EditResultPage({
         <h2 className="text-xl font-semibold mt-4">Edit Result</h2>
       </header>
 
-      <section className="bg-white rounded-t-[40px] px-4 pt-8 pb-24">
+      <section className="bg-white rounded-t-[40px] px-4 pt-8 pb-54">
         <div className="space-y-4">
           {subjects.map((s, i) => (
             <div key={s.subject} className="bg-[#f4f4f4] p-4 rounded-2xl">

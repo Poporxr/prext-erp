@@ -56,7 +56,7 @@ export default function SingleTeacherPage({
             </header>
 
             {/* CONTENT */}
-            <section className="bg-white rounded-t-[40px] px-4 pt-8 pb-20 min-h-screen">
+            <section className="bg-white rounded-t-[40px] px-4 pt-8 pb-50 min-h-screen">
                 {/* TEACHER INFO */}
                 <div className="grid grid-cols-2 gap-4 text-sm mb-8">
                     <InfoCard label="Contact" value={teacher.phoneNo} />
@@ -80,7 +80,7 @@ export default function SingleTeacherPage({
                     </div>
                 </div>
 
-                
+
                 {/* ACTION BUTTONS */}
                 <div className="flex flex-col gap-3 mt-10">
 

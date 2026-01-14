@@ -18,7 +18,7 @@ export default function EditTeacherPage() {
         <h2 className="text-xl font-semibold mt-4">Edit Teacher</h2>
       </header>
 
-      <section className="bg-white rounded-t-[40px] px-4 pt-8 pb-24">
+      <section className="bg-white rounded-t-[40px] px-4 pt-8 pb-24 h-screen">
         <form className="space-y-5">
           <Input label="Full Name" value={form.name} />
           <Input label="Subject" value={form.subject} />

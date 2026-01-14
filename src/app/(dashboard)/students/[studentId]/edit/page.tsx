@@ -44,7 +44,7 @@ export default function EditStudentPage() {
         </h2>
       </header>
 
-      <section className="bg-white rounded-t-[40px] px-4 pt-8 pb-24">
+      <section className="bg-white rounded-t-[40px] px-4 pt-8 pb-56 min-h-screen">
         <form className="space-y-5">
           <Input label="Full Name" defaultValue={student.name} />
           <Input label="Age" type="number" defaultValue={student.age} />
