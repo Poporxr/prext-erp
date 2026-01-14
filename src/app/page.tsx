@@ -76,7 +76,7 @@ const Homepage = () => {
           </span>
         </div>
 
-        <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm">
+        <div className="w-18 h-18 bg-white rounded-full flex items-center justify-center shadow-sm">
           <Image src="/profile.svg" width={28} height={28} alt="Profile" />
         </div>
       </header>
