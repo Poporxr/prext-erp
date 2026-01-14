@@ -1,0 +1,246 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+////////////////////////
+/// ENUMS
+////////////////////////
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  RETIRED
+}
+
+enum StudentStatus {
+  ACTIVE
+  GRADUATED
+  WITHDRAWN
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+////////////////////////
+/// ACADEMIC STRUCTURE
+////////////////////////
+
+model AcademicYear {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  startDate DateTime
+  endDate   DateTime
+  isActive  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  terms     Term[]
+  classes   Class[]
+  results   Result[]
+  teacherAssignments TeacherClassSubject[]
+  promotions StudentClassHistory[]
+}
+
+model Term {
+  id             String   @id @default(uuid())
+  name           String
+  order          Int
+  academicYearId String
+  startDate      DateTime
+  endDate        DateTime
+  createdAt      DateTime @default(now())
+
+  academicYear AcademicYear @relation(fields: [academicYearId], references: [id])
+  results      Result[]
+
+  @@unique([academicYearId, order])
+}
+
+////////////////////////
+/// USERS
+////////////////////////
+
+model Admin {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model Teacher {
+  id        String     @id @default(uuid())
+  name      String
+  email     String     @unique
+  phone     String
+  hireDate  DateTime
+  status    UserStatus @default(ACTIVE)
+  createdAt DateTime   @default(now())
+
+  assignments TeacherClassSubject[]
+}
+
+model Parent {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  phone     String
+  address   String
+  createdAt DateTime @default(now())
+
+  students Student[]
+}
+
+////////////////////////
+/// STUDENTS
+////////////////////////
+
+model Student {
+  id              String        @id @default(uuid())
+  admissionNumber String        @unique
+  firstName       String
+  lastName        String
+  gender          Gender
+  dateOfBirth     DateTime
+  address         String
+  status          StudentStatus @default(ACTIVE)
+
+  parentId       String
+  currentClassId String
+
+  enrollmentDate DateTime
+  createdAt      DateTime @default(now())
+
+  parent       Parent @relation(fields: [parentId], references: [id])
+  currentClass Class  @relation(fields: [currentClassId], references: [id])
+
+  results      Result[]
+  classHistory StudentClassHistory[]
+}
+
+////////////////////////
+/// CLASSES & SUBJECTS
+////////////////////////
+
+model Class {
+  id             String   @id @default(uuid())
+  level          String
+  arm            String?
+  academicYearId String
+  createdAt      DateTime @default(now())
+
+  academicYear AcademicYear @relation(fields: [academicYearId], references: [id])
+
+  students     Student[]
+  subjects     ClassSubject[]
+  teachers     TeacherClassSubject[]
+  results      Result[]
+}
+
+model Subject {
+  id          String   @id @default(uuid())
+  name        String
+  code        String   @unique
+  description String
+  createdAt   DateTime @default(now())
+
+  classes  ClassSubject[]
+  teachers TeacherClassSubject[]
+  results  Result[]
+}
+
+////////////////////////
+/// MANY-TO-MANY
+////////////////////////
+
+model ClassSubject {
+  id        String   @id @default(uuid())
+  classId   String
+  subjectId String
+  createdAt DateTime @default(now())
+
+  class   Class   @relation(fields: [classId], references: [id])
+  subject Subject @relation(fields: [subjectId], references: [id])
+
+  @@unique([classId, subjectId])
+}
+
+model TeacherClassSubject {
+  id             String   @id @default(uuid())
+  teacherId      String
+  classId        String
+  subjectId      String
+  academicYearId String
+  assignedAt     DateTime @default(now())
+
+  teacher      Teacher      @relation(fields: [teacherId], references: [id])
+  class        Class        @relation(fields: [classId], references: [id])
+  subject      Subject      @relation(fields: [subjectId], references: [id])
+  academicYear AcademicYear @relation(fields: [academicYearId], references: [id])
+
+  @@unique([teacherId, classId, subjectId, academicYearId])
+}
+
+////////////////////////
+/// RESULTS
+////////////////////////
+
+model Result {
+  id            String   @id @default(uuid())
+  studentId     String
+  classId       String
+  subjectId     String
+  academicYearId String
+  termId        String
+
+  continuousAssessment Float
+  examScore            Float
+  totalScore           Float
+
+  grade  String
+  remark String?
+
+  createdAt DateTime @default(now())
+
+  student      Student      @relation(fields: [studentId], references: [id])
+  class        Class        @relation(fields: [classId], references: [id])
+  subject      Subject      @relation(fields: [subjectId], references: [id])
+  academicYear AcademicYear @relation(fields: [academicYearId], references: [id])
+  term         Term         @relation(fields: [termId], references: [id])
+
+  @@unique([studentId, subjectId, termId])
+  @@index([studentId])
+  @@index([classId])
+  @@index([academicYearId, termId])
+}
+
+////////////////////////
+/// HISTORY (AUDIT-SAFE)
+////////////////////////
+
+model StudentClassHistory {
+  id             String   @id @default(uuid())
+  studentId      String
+  fromClassId    String
+  toClassId      String
+  academicYearId String
+  promoted       Boolean
+  reason         String?
+  createdAt      DateTime @default(now())
+
+  student      Student      @relation(fields: [studentId], references: [id])
+  academicYear AcademicYear @relation(fields: [academicYearId], references: [id])
+}
